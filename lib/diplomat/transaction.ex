@@ -29,11 +29,12 @@ defmodule Diplomat.Transaction do
     RollbackRequest,
     RollbackResponse,
     LookupRequest,
-    ReadOptions
+    ReadOptions,
+    RunQueryRequest,
+    PartitionId
   }
 
   alias Diplomat.{Transaction, Entity, Key, Client, Query}
-  alias Diplomat.Proto.{RunQueryRequest, PartitionId}
 
   @type t :: %__MODULE__{
           id: integer,
