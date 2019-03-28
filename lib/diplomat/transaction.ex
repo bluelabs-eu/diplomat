@@ -32,7 +32,8 @@ defmodule Diplomat.Transaction do
     ReadOptions
   }
 
-  alias Diplomat.{Transaction, Entity, Key, Client, Query, RunQueryRequest, PartitionId}
+  alias Diplomat.{Transaction, Entity, Key, Client, Query}
+  alias Diplomat.Proto.{RunQueryRequest, PartitionId}
 
   @type t :: %__MODULE__{
           id: integer,
