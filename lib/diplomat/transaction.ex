@@ -32,7 +32,7 @@ defmodule Diplomat.Transaction do
     ReadOptions
   }
 
-  alias Diplomat.{Transaction, Entity, Key, Client}
+  alias Diplomat.{Transaction, Entity, Key, Client, Query}
 
   @type t :: %__MODULE__{
           id: integer,
@@ -106,6 +106,18 @@ defmodule Diplomat.Transaction do
 
   def find(transaction, key) do
     find(transaction, [key])
+  end
+
+  @spec execute(Transaction.t(), Query.t(), String.t() | nil) :: list(Entity.t()) | Client.error()
+  def execute(%Transaction{id: id}, %Query{} = q, namespace \\ nil) do
+    {:ok, project} = Goth.Config.get(:project_id)
+
+    RunQueryRequest.new(
+      query_type: {:gql_query, q |> Query.proto()},
+      partition_id: PartitionId.new(namespace_id: namespace, proejct_id: project),
+      read_options: %ReadOptions{consistency_type: {:transaction, id}}
+    )
+    |> Diplomat.Client.run_query()
   end
 
   # we could clean this up with some macros
