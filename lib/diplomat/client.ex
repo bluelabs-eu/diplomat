@@ -99,7 +99,7 @@ defmodule Diplomat.Client do
     end
   end
 
-  @spec run_query_with_cursor(RunQueryRequest.t()) :: {list(Entity.t()), bytes} | error
+  @spec run_query_with_cursor(RunQueryRequest.t()) :: {list(Entity.t()), byte()} | error
   @doc "Query for entities and returns the cursor"
   def run_query_with_cursor(req) do
     req
